@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Othello Game Visualiser</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <header class="header">
+        <div>
+          <h1>Othello Game Visualiser</h1>
+          <p class="subtitle">Replay a game from a log file</p>
+        </div>
+        <div class="meta">
+          <span>Player: <strong><%= game.metadata.myName %></strong></span>
+          <span>Color: <strong><%= game.metadata.myColour %></strong></span>
+          <span>Board: <strong><%= game.metadata.boardSize %>x<%= game.metadata.boardSize %></strong></span>
+          <span>Time: <strong><%= game.metadata.timeLimit %>s</strong></span>
+        </div>
+      </header>
+
+      <section class="panel">
+        <div class="status-row">
+          <p id="stepTitle" class="step-title"></p>
+          <div class="status-right">
+            <div class="score" aria-hidden="false">
+              <span class="score-badge black">B: <strong id="blackScore">0</strong></span>
+              <span class="score-badge white">W: <strong id="whiteScore">0</strong></span>
+            </div>
+            <p id="stepCounter" class="step-counter"></p>
+          </div>
+        </div>
+
+        <div id="board" class="board" aria-label="Othello board"></div>
+
+        <div class="controls">
+          <button id="prevBtn" type="button">Previous</button>
+          <button id="playBtn" type="button">Play</button>
+          <button id="nextBtn" type="button">Next</button>
+          <label class="speed-wrap" for="speedSelect">
+            Speed
+            <select id="speedSelect">
+              <option value="1400">0.7x</option>
+              <option value="950" selected>1x</option>
+              <option value="600">1.6x</option>
+              <option value="350">2.7x</option>
+            </select>
+          </label>
+        </div>
+
+        <input id="timeline" class="timeline" type="range" min="0" max="0" value="0" />
+      </section>
+    </main>
+
+    <script>
+      window.__GAME_DATA__ = <%- JSON.stringify(game) %>;
+    </script>
+    <script src="/app.js"></script>
+  </body>
+</html>
