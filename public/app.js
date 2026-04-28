@@ -8,12 +8,43 @@ const prevBtn = document.getElementById("prevBtn");
 const playBtn = document.getElementById("playBtn");
 const nextBtn = document.getElementById("nextBtn");
 const speedSelect = document.getElementById("speedSelect");
+const atomToggle = document.getElementById("atomToggle");
 
 const snapshots = Array.isArray(game?.snapshots) ? game.snapshots : [];
 let currentStep = 0;
 let isPlaying = false;
 let playTimer = null;
 let lastRenderedStep = null;
+const atomModeStorageKey = "atomOneDarkMode";
+
+function setAtomOneDarkMode(isEnabled) {
+  document.body.classList.toggle("theme-atom", isEnabled);
+  if (atomToggle) {
+    atomToggle.checked = isEnabled;
+  }
+  try {
+    localStorage.setItem(atomModeStorageKey, JSON.stringify(isEnabled));
+  } catch (error) {
+    // Ignore storage errors (private mode, blocked storage, etc.).
+  }
+}
+
+function loadAtomOneDarkMode() {
+  if (!atomToggle) {
+    return;
+  }
+
+  let stored = null;
+  try {
+    stored = localStorage.getItem(atomModeStorageKey);
+  } catch (error) {
+    stored = null;
+  }
+
+  if (stored !== null) {
+    setAtomOneDarkMode(stored === "true");
+  }
+}
 
 function renderBoard(snapshot, previousSnapshot, shouldAnimateTransition) {
   boardEl.innerHTML = "";
@@ -179,6 +210,13 @@ timelineEl.addEventListener("input", (event) => {
   stopPlayback();
   renderStep(Number.parseInt(event.target.value, 10));
 });
+
+if (atomToggle) {
+  loadAtomOneDarkMode();
+  atomToggle.addEventListener("change", (event) => {
+    setAtomOneDarkMode(event.target.checked);
+  });
+}
 
 if (snapshots.length > 0) {
   timelineEl.max = String(snapshots.length - 1);
