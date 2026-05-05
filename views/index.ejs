@@ -59,6 +59,35 @@
 
         <input id="timeline" class="timeline" type="range" min="0" max="0" value="0" />
       </section>
+
+      <section class="panel live-panel">
+        <div class="live-header">
+          <h2>Play Live</h2>
+          <p class="subtitle">Challenge a local opponent process from the browser.</p>
+        </div>
+        <div class="live-controls">
+          <label class="live-field">
+            Opponent path (.c or binary)
+            <input id="opponentPath" type="text" placeholder="temp/te-local-test-harness/src/local_opponent.c" value="<%= game.live?.defaultOpponentPath || '' %>" />
+          </label>
+          <label class="live-field">
+            Use local referee (comms.h)
+            <input id="useReferee" type="checkbox" <%= game.live?.defaultUseReferee ? 'checked' : '' %> />
+          </label>
+          <label class="live-field">
+            Your color
+            <select id="opponentColor">
+              <option value="B" selected>Black</option>
+              <option value="W">White</option>
+            </select>
+          </label>
+          <div class="live-actions">
+            <button id="startLiveBtn" type="button">Start Live Game</button>
+            <button id="passBtn" type="button" disabled>Pass</button>
+          </div>
+        </div>
+        <p id="liveStatus" class="live-status"></p>
+      </section>
     </main>
 
     <script>

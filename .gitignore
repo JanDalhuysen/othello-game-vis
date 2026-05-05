@@ -1,1 +1,11 @@
 node_modules
+temp
+tmp
+temp/te-local-test-harness/
+temp/opponent_adapter/bin/
+tools/te-local-test-harness/
+tools/opponent_adapter/bin/
+game.log
+*.exe
+*.o
+*.obj
